@@ -53,6 +53,7 @@ class AIQuestions:
             "Question: What is the capital of France?,A) Madrid,B) Paris,C) London,Correct_Answer: B"
         )
 
+    #change this part if you want to change the model
     def set_settings_of_AI(self, difficulty, service):
         """Set the settings for the AI model and get the response."""
         prompt = self.instructions_for_the_prompt(service, difficulty)
@@ -62,7 +63,7 @@ class AIQuestions:
             "textGenerationConfig": {
                 "maxTokenCount": 3072,
                 "stopSequences": [],
-                "temperature": 0.7,
+                "temperature": 0.0,
                 "topP": 0.9
             }
         }
@@ -70,6 +71,8 @@ class AIQuestions:
         try:
             response = self.client.invoke_model(
                 modelId=self.model_id,
+                contentType= "application/json",
+                accept="application/json",
                 body=json.dumps(payload)
             )
             
@@ -81,20 +84,23 @@ class AIQuestions:
     def get_question(self, difficulty, service):
         """Get the question from the response text."""
         response_text = self.set_settings_of_AI(difficulty, service)
-        #print(response_text)
+        # print("###############################333")
+        # print(response_text)
         # Usar regex para extraer el contenido de "content"
         if response_text:
             text_response = response_text
             # Extraer la pregunta directamente
-            question_start = text_response.find("Question: ") + len("Question: ")
-            question_end = text_response.find("?", question_start) + 1
+            question_start = text_response.find("ion:")+4 if "Question:" in text_response else 0
+            question_end = text_response.find("?") + 1 if "?" in text_response else text_response.find("A)")
             question = text_response[question_start:question_end].strip()
+            question = question[:-1] if question.endswith(",") else question
             # Extraer las opciones
             options_start = text_response.find("A)") 
             options_end = text_response.find("Correct_Answer:")
-            options = text_response[options_start:options_end].strip().split(", ")
+            options = text_response[options_start:options_end].strip()
+            options=options[:-1].split(",") if options.endswith(",") else options.split(",")
             # Extraer la respuesta correcta
-            correct_answer_start = text_response.find("Correct_Answer:") + len("Correct_Answer: ")
+            correct_answer_start = text_response.find("Correct_Answer:") + len("Correct_Answer:")
             correct_answer = text_response[correct_answer_start:].strip()
             # Crear y retornar la lista con los resultados
             return [question] + options + [correct_answer]
@@ -105,13 +111,17 @@ def main_get_question(difficulty, service):
     try:
         ai = AIQuestions()
         question_data = ai.get_question(difficulty, service)
-        print(question_data)
         return question_data
     except Exception as e:
         return f"Error: {e}"
 
-print(main_get_question("easy", "S3"))
-# if __name__ == "__main__":
-#     difficulty = sys.argv[1]
-#     service = sys.argv[2]
-#     print(main_get_question(difficulty, service))
+
+# result_try=main_get_question("easy", "aws")
+# print(result_try)
+# print(len(result_try))
+# print("----------------------------------------------------------------")
+
+if __name__ == "__main__":
+    difficulty = sys.argv[1]
+    service = sys.argv[2]
+    print(main_get_question(difficulty, service))

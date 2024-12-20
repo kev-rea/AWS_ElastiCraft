@@ -1,0 +1,41 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 119, in script
+    "[generate_question]"
+NameError: name 'generate_question' is not defined
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 119, in script
+    "[generate_question]"
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/ast.py", line 2579, in execute
+    Say.execute(self)
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/ast.py", line 621, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/exports/sayexports.py", line 132, in say
+    who(what, *args, **kwargs)
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/character.py", line 1440, in __call__
+    what = self.prefix_suffix("what", self.what_prefix, what, self.what_suffix)
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/character.py", line 1354, in prefix_suffix
+    return (sub(prefix) + sub(body) + sub(suffix))
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/character.py", line 1334, in sub
+    return renpy.substitutions.substitute(s, scope=scope, force=force, translate=translate)[0]
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/substitutions.py", line 373, in substitute
+    s = interpolate(s, variables) # type: ignore
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/substitutions.py", line 86, in interpolate
+    raise e
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/substitutions.py", line 78, in interpolate
+    value = renpy.python.py_eval(code, {}, scope)
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/python.py", line 1209, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "/home/kevin/NEW FASE WP2.0/RenPay/renpy-8.3.4-sdk/renpy/python.py", line 1202, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "<none>", line 1, in <module>
+NameError: name 'generate_question' is not defined
+
+Linux-5.15.153.1-microsoft-standard-WSL2-x86_64-with-glibc2.31 x86_64
+Ren'Py 8.3.4.24120703
+LearnAws 1.0
+Fri Dec 20 11:14:47 2024

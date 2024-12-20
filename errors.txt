@@ -1,0 +1,12 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+The label Solutions_Architect is defined twice, at File "game/script.rpy", line 66:
+label Solutions_Architect:
+and File "game/script.rpy", line 126:
+label Solutions_Architect:
+
+
+Ren'Py Version: Ren'Py 8.3.4.24120703
+Fri Dec 20 09:34:44 2024
